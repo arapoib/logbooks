@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hover Effect</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background: url('offset.jpg') no-repeat center center fixed;
+            background-size: cover;
+            cursor: url('book.png'), auto; /* Add custom cursor */
+            display: flex; /* Enable flexbox for centering */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+        }
+
+        .form-container {
+            position: absolute;
+            bottom: 50px; /* Move the form 50px up from the bottom */
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        input[type="email"] {
+            width: 250px;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-bottom: 1px solid #fff; /* Underline only */
+            background: none;
+            color: #fff;
+            outline: none;
+        }
+
+        input[type="email"]::placeholder {
+            color: #fff;
+        }
+
+        input[type="submit"] {
+            display: none; /* Hide the submit button */
+        }
+
+        /* Grid styles for the boxes */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 120px); /* 3 columns of 120px */
+            grid-template-rows: repeat(3, 180px); /* 3 rows of 180px */
+            gap: 10px; /* Space between boxes */
+            position: absolute; /* Center the grid */
+            top: 50%; /* 50% from top */
+            left: 50%; /* 50% from left */
+            transform: translate(-50%, -50%); /* Centering with transform */
+        }
+
+        .grid-item {
+            background-color: white; /* White color for boxes */
+            width: 120px; /* Width of each box */
+            height: 180px; /* Height of each box */
+            border: 1px solid #ccc; /* Optional border for boxes */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional shadow */
+            position: relative; /* Position for tooltip */
+            overflow: hidden; /* Ensure text doesn't overflow */
+            display: flex; /* Flexbox for centering text */
+            justify-content: center; /* Center text horizontally */
+            align-items: center; /* Center text vertically */
+            font-size: 36px; /* Font size for letters */
+            color: transparent; /* Hide letters initially */
+            transition: color 0.3s ease; /* Smooth transition for color */
+        }
+
+        /* Set the individual letters */
+        .grid-item:nth-child(1)::after { content: 'L'; }
+        .grid-item:nth-child(2)::after { content: 'O'; }
+        .grid-item:nth-child(3)::after { content: 'G'; }
+        .grid-item:nth-child(4)::after { content: 'B'; }
+        .grid-item:nth-child(5)::after { content: 'O'; }
+        .grid-item:nth-child(6)::after { content: 'O'; }
+        .grid-item:nth-child(7)::after { content: 'K'; }
+        .grid-item:nth-child(8)::after { content: 'S'; }
+
+        /* 9th box */
+        .grid-item:nth-child(9) {
+            color: transparent; /* Hide content initially */
+        }
+
+        .grid-item:nth-child(9)::after {
+            content: 'COMING SOON!'; /* Text for the 9th box */
+            color: black; /* Show the text color */
+            transform: rotate(-5deg); /* Slightly crooked text */
+            font-size: 16px; /* Adjust font size for smaller text */
+            text-align: center; /* Center the text */
+            display: block; /* Ensure the pseudo-element behaves like a block */
+            line-height: 180px; /* Center the text vertically in the box */
+            opacity: 0; /* Initially hide the text */
+            transition: opacity 0.3s ease; /* Smooth transition for opacity */
+        }
+
+        .grid-item.show::after {
+            opacity: 1; /* Show the text */
+            color: black; /* Ensure the text color is black when visible */
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+    </div>
+
+    <div class="form-container">
+        <form action="#" method="POST">
+            <input type="email" name="email" placeholder="Enter your email" required>
+            <input type="submit" value="Subscribe">
+        </form>
+    </div>
+
+    <script>
+        const gridItems = document.querySelectorAll('.grid-item');
+
+        gridItems.forEach(item => {
+            let timer; // Timer variable for each item
+
+            item.addEventListener('mouseenter', () => {
+                clearTimeout(timer); // Clear any existing timer
+                item.classList.add('show'); // Show text on hover
+            });
+
+            item.addEventListener('mouseleave', () => {
+                // Set a timer to hide the text after 2 seconds
+                timer = setTimeout(() => {
+                    item.classList.remove('show'); // Hide text after 2 seconds
+                }, 1000); // 2 seconds
+            });
+        });
+    </script>
+</body>
+</html>
